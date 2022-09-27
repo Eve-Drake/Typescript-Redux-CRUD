@@ -3,27 +3,28 @@ import { addTodo } from './todoListSlice'
 import { useDispatch } from 'react-redux'
 
 const AddTodo = () => {
-    const [todo, setTodo] = useState<string>('')
+    const [text, setText] = useState<string>('')
     const dispatch = useDispatch()
 
     const addTodoToArray =()=>{
-        if(todo){
-            dispatch(addTodo({todo: todo, id: Math.floor(Math.random()* 1000), completed: false}))
+        if(text){
+            dispatch(addTodo(text))
         }
         else{
             return
         }
-        setTodo('')
+        setText('')
     }
   return (
-    <div>
-        <input 
-        placeholder='Add Todo'
-        type='text'
-        value={todo}
-        onChange={(e)=>setTodo(e.target.value)}
-        />
-        <button onClick={addTodoToArray}>Add Todo</button>
+    <div className="input-group">
+        <input type="text" 
+            className="form-control" 
+            placeholder='Add Todo'
+            aria-label='Add Todo'         
+            value={text}
+            onChange={(e)=>setText(e.target.value)}
+            aria-describedby="button-addon2" />
+        <button className="btn btn-outline-secondary" onClick={addTodoToArray} type="button" id="button-addon2">Add</button>
     </div>
   )
 }

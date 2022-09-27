@@ -3,19 +3,26 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 interface Todo {
     todo: string,
     id: number,
-    completed: boolean
+    completed: boolean,
+    editStatus: boolean
 }
 
 interface TodoArray {
     todosList : Todo[]
 }
 
+interface EditTodo{
+    text : string,
+    id: number
+}
 const initialState: TodoArray = {
     todosList: [
-        {todo: 'check if working', id: 0, completed: false},
-        {todo: 'It is', id: 2, completed: false}
+        {todo: 'check if working', id: 0, completed: false, editStatus: false},
+        {todo: 'It is', id: 2, completed: false, editStatus: false}
     ],
 }
+
+
    
 export const todoListSlice = createSlice({
     name: 'todoList',
@@ -25,10 +32,11 @@ export const todoListSlice = createSlice({
             reducer: (state, action: PayloadAction<Todo>) => {
                 state.todosList.push(action.payload)
             },
-            prepare: (todo: Todo) => {
+            prepare: (todo: string) => {
                 const id = Math.floor(Math.random()*1000)
                 const completed = false
-                return {payload: todo, id, completed}
+                const editStatus = false
+                return { payload: {todo, id, completed, editStatus}}
             },
        },
 
@@ -38,8 +46,24 @@ export const todoListSlice = createSlice({
 
        completeTodo: (state, action: PayloadAction<number>) =>{
         state.todosList = state.todosList.map((el) => {
-            if(el.id ===action.payload){
-                return {...el,completed: !el.completed}
+            if(el.id === action.payload){
+                return {...el, completed: !el.completed}
+            }
+            return el
+        })
+       },
+       editTodoArrayItem: (state, action: PayloadAction<EditTodo>) =>{
+        state.todosList = state.todosList.map((el)=> {
+            if(el.id === action.payload.id){
+                return {...el, todo: action.payload.text, editStatus: false}
+            }
+            return el
+        })
+       },
+       setEditStatus : (state, action: PayloadAction<number>) =>{
+        state.todosList = state.todosList.map((el) => {
+            if(el.id === action.payload){
+                return {...el, editStatus: !el.editStatus}
             }
             return el
         })
@@ -49,7 +73,7 @@ export const todoListSlice = createSlice({
     },
 })
 
-export const {addTodo, deleteTodo, completeTodo} = todoListSlice.actions
+export const {addTodo, deleteTodo, completeTodo, setEditStatus, editTodoArrayItem} = todoListSlice.actions
 export default todoListSlice.reducer;
 
 
