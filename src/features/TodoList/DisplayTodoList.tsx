@@ -10,12 +10,12 @@ const DisplayTodoList = () => {
   return (
     <div>
         {todos.map((i)=>(
-            <div className='container m-2'>
-                <div key={i.id} className='row border rounded p-1'>
-                    <div className='col-6'>
+            <div className='container mt-2'>
+                <div key={i.id} className='d-flex justify-content-between border rounded'>
+                    <div className='item'>
                         {(i.editStatus ? <EditTodo id={i.id}/> : <p>{i.todo}</p>)}
                     </div>
-                    <div className='col '>
+                    <div className='item'>
                         <button onClick={()=>dispatch(setEditStatus(i.id))} className="btn btn-outline-secondary">{i.editStatus? 'Close Editor' : 'Edit'}</button>
                         <button onClick={()=>dispatch(completeTodo(i.id))} className='btn btn-outline-success'>{i.completed? 'Undo' : 'Complete'}</button>
                         <button onClick={()=>dispatch(deleteTodo(i.id))} className="btn btn-outline-danger">Delete</button>

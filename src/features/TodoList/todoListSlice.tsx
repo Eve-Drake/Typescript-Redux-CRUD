@@ -17,8 +17,8 @@ interface EditTodo{
 }
 const initialState: TodoArray = {
     todosList: [
-        {todo: 'check if working', id: 0, completed: false, editStatus: false},
-        {todo: 'It is', id: 2, completed: false, editStatus: false}
+        {todo: 'Typescript - redux todo list', id: 0, completed: false, editStatus: false},
+        {todo: 'Finish Styling', id: 2, completed: false, editStatus: false}
     ],
 }
 
